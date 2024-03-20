@@ -1,0 +1,4 @@
+---
+- name: Pause for proxmox to catch up
+  ansible.builtin.pause:
+    seconds: "{{ proxmox_pause_timeout | default(proxmox_timeouts.creation) }}"

@@ -1,0 +1,6 @@
+---
+- name: Run tasks on all k3s nodes
+  ansible.builtin.include_tasks: "{{ proxmox_loop_task }}"
+  loop: "{{ cluster_nodes.servers + cluster_nodes.workers }}"
+  loop_control:
+    loop_var: node

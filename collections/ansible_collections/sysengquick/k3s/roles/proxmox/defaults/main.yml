@@ -27,6 +27,10 @@ proxmox_template:
   storage: local
   vmid: 2500
 
+proxmox_timeouts:
+  api: 120
+  creation: 15
+
 # use become plugin for sudo access to qm disk import command
 # see notes in create_templae.yml for more information
 proxmox_use_become: false

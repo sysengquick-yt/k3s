@@ -1,0 +1,18 @@
+---
+- name: Assert variable definitions
+  ansible.builtin.assert:
+    that: proxmox_node_name is defined or proxmox_node_vmid is defined
+    fail_msg: One of proxmox_node_name/proxmox_node_vmid is required
+
+- name: Pause for proxmox
+  ansible.builtin.include_tasks: pause_for_proxmox.yml
+
+- name: Start node
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_api.host }}"
+    api_user: "{{ proxmox_api.user }}"
+    api_token_id: "{{ proxmox_api.token_id }}"
+    api_token_secret: "{{ proxmox_api.token_secret }}"
+    name: "{{ proxmox_node_name | default(omit) }}"
+    state: started
+    vmid: "{{ proxmox_node_vmid | default(omit) }}"

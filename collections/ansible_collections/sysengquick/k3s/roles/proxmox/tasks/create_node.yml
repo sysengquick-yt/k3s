@@ -1,0 +1,36 @@
+---
+- name: Create k3s node from template
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_api.host }}"
+    api_user: "{{ proxmox_api.user }}"
+    api_token_id: "{{ proxmox_api.token_id }}"
+    api_token_secret: "{{ proxmox_api.token_secret }}"
+    name: "{{ node.name }}"
+    node: "{{ proxmox_node }}"
+    clone: "{{ proxmox_template.name }}"
+    format: "{{ proxmox_disk_format }}"
+    full: true
+    storage: "{{ proxmox_template.storage }}"
+    timeout: "{{ proxmox_timeouts.api }}"
+    vmid: "{{ proxmox_template.vmid }}"
+  register: result
+
+- name: Register vmid
+  ansible.builtin.set_fact:
+    proxmox_node_vmid: "{{ result.vmid }}"
+
+- name: Update IP configuration
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_api.host }}"
+    api_user: "{{ proxmox_api.user }}"
+    api_token_id: "{{ proxmox_api.token_id }}"
+    api_token_secret: "{{ proxmox_api.token_secret }}"
+    ipconfig:
+      ipconfig0: "ip={{ node.ip }}/{{ cluster_network.cidr }},gw={{ cluster_network.gateway }}"
+    node: "{{ proxmox_node }}"
+    state: present
+    update: true
+    vmid: "{{ proxmox_node_vmid }}"
+
+- name: Start node
+  ansible.builtin.include_tasks: start_node.yml
