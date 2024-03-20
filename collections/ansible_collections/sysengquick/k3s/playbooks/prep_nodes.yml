@@ -1,0 +1,11 @@
+---
+- name: Prep nodes
+  hosts: k3s
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Prep nodes
+      ansible.builtin.include_role:
+        name: sysengquick.k3s.proxmox
+        tasks_from: prep_node

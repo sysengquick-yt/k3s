@@ -1,0 +1,32 @@
+---
+- name: Wait for server to startup
+  ansible.builtin.wait_for_connection:
+    timeout: "{{ proxmox_timeouts.startup }}"
+
+#
+# PROBLEM: server may not be fully up, even if wait_for_connection returns
+# SOLUTION: retry the first task a couple times with a short delay
+#
+- name: Install packages
+  ansible.builtin.package:
+    name:
+      - iptables
+      - qemu-guest-agent
+    state: present
+  register: result
+  retries: 3
+  delay: "{{ proxmox_timeouts.creation }}"
+  until: result is not failed
+
+- name: Start qemu-guest-agent
+  ansible.builtin.service:
+    name: qemu-guest-agent
+    state: started
+
+- name: Load installed packages
+  ansible.builtin.package_facts:
+
+- name: Stop and disable ufw
+  community.general.ufw:
+    state: disabled
+  when: "'ufw' in ansible_facts.packages"

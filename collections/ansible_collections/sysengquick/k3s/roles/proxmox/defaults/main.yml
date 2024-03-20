@@ -30,6 +30,7 @@ proxmox_template:
 proxmox_timeouts:
   api: 120
   creation: 15
+  startup: 300
 
 # use become plugin for sudo access to qm disk import command
 # see notes in create_templae.yml for more information
