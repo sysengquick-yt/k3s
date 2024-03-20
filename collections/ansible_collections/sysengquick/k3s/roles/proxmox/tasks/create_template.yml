@@ -1,0 +1,189 @@
+---
+- name: Test sudo access
+  ansible.builtin.command: echo 'Hello'
+  become: true
+  changed_when: false
+  when: proxmox_use_become
+
+- name: Create template VM
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_api.host }}"
+    api_user: "{{ proxmox_api.user }}"
+    api_token_id: "{{ proxmox_api.token_id }}"
+    api_token_secret: "{{ proxmox_api.token_secret }}"
+    name: "{{ proxmox_template.name }}"
+    agent: enabled=1
+    balloon: 0
+    boot: order=scsi0
+    cipassword: "{{ proxmox_template.cipassword }}"
+    ciuser: "{{ proxmox_template.ciuser }}"
+    cores: "{{ proxmox_template.cores }}"
+    cpu: host
+    ide:
+      ide2: "{{ proxmox_template.storage }}:cloudinit,format={{ proxmox_disk_format }}"
+    ipconfig:
+      ipconfig0: "ip=dhcp"
+    memory: "{{ proxmox_template.memory }}"
+    net:
+      net0: "model=virtio,bridge={{ proxmox_template.bridge }},firewall=0,mtu=1"
+    node: "{{ proxmox_node }}"
+    ostype: l26
+    scsihw: virtio-scsi-single
+    serial:
+      serial0: socket
+    sshkeys: "{{ proxmox_template.sshkeys }}"
+    vga: serial0
+    vmid: "{{ proxmox_template.vmid }}"
+  delegate_to: localhost
+
+- name: Import cloud image to template
+  block:
+    - name: Download cloud image
+      ansible.builtin.get_url:
+        checksum: "{{ proxmox_image.method }}:{{ proxmox_image_url.digest }}"
+        dest: "{{ proxmox_image_dest }}"
+        mode: "0644"
+        url: "{{ proxmox_image_url.image }}"
+
+    # Check if the disk is already attached
+    # This is needed later to keep the playbook idempotent
+    - name: Get disk imfo
+      community.general.proxmox_disk:
+        api_host: "{{ proxmox_api.host }}"
+        api_user: "{{ proxmox_api.user }}"
+        api_token_id: "{{ proxmox_api.token_id }}"
+        api_token_secret: "{{ proxmox_api.token_secret }}"
+        create: disabled
+        disk: scsi0
+        vmid: "{{ proxmox_template.vmid }}"
+      register: result
+      failed_when: false
+      delegate_to: localhost
+
+    - name: Register template_attach_disk
+      ansible.builtin.set_fact:
+        template_attach_disk: "{{ result.msg | ansible.builtin.regex_search('^Disk scsi0 not found') is not none }}"
+
+    # No need to do anything if the disk is already attached
+    - name: Create disk from cloud image
+      when: template_attach_disk
+      block:
+        #
+        # Problem: API requires root to create disk images from files
+        # Solution: Login to the server and run qm manually
+        #
+        # Alternative: Use root and password (API token on root doesn't work)
+        #              But I don't like using account passwords for APIs
+        #
+        # Problem 2: Running qm isn't idempotent
+        # Solution: Check if disk has been created and only run qm if is isn't
+        #
+        - name: Get disk info
+          community.general.proxmox_disk:
+            api_host: "{{ proxmox_api.host }}"
+            api_user: "{{ proxmox_api.user }}"
+            api_token_id: "{{ proxmox_api.token_id }}"
+            api_token_secret: "{{ proxmox_api.token_secret }}"
+            create: disabled
+            disk: unused0
+            vmid: "{{ proxmox_template.vmid }}"
+          register: result
+          failed_when: false
+          delegate_to: localhost
+
+        - name: Register disk status
+          ansible.builtin.set_fact:
+            template_disk_created: "{{ result.msg | ansible.builtin.regex_search('^Disk unused0 not found') is none }}"
+
+        - name: Branch based on become method
+          when: not template_disk_created
+          block:
+            #
+            # Use sudo directly in the command
+            #
+            # Benefits: Allows limited sudo privilegs for the user
+            #           Only qm disk import needs to be added to sudo config
+            #
+            # Drawbacks: We cannot prompt for a sudo password here
+            #            The command must have passwordless sudo
+            #
+            - name: Create disk from cloud image
+              ansible.builtin.command:
+                cmd: "sudo -n {{ proxmox_qm_disk_import }}"
+              changed_when: true
+              when: not proxmox_use_become
+
+            #
+            # Use become plugin
+            #
+            # Benefits: Supply become password with --ask-become-pass
+            #           Also works if user has passwordless sudo access
+            #
+            # Drawbacks: The user needs full sudo privileges
+            #            The become plugin does more than just run this command
+            #
+            - name: Create disk from cloud image
+              ansible.builtin.command:
+                cmd: "{{ proxmox_qm_disk_import }}"
+              become: true
+              changed_when: true
+              when: proxmox_use_become
+
+        - name: Attach disk
+          community.general.proxmox_kvm:
+            api_host: "{{ proxmox_api.host }}"
+            api_user: "{{ proxmox_api.user }}"
+            api_token_id: "{{ proxmox_api.token_id }}"
+            api_token_secret: "{{ proxmox_api.token_secret }}"
+            node: "{{ proxmox_node }}"
+            scsi:
+              scsi0: "{{ proxmox_image_location }}"
+            vmid: "{{ proxmox_template.vmid }}"
+            update: true
+            update_unsafe: true
+          delegate_to: localhost
+  always:
+    # block (Import cloud image to template)
+    - name: Remove cloud image download
+      ansible.builtin.file:
+        path: "{{ proxmox_image_dest }}"
+        state: absent
+      when: proxmox_image_delete
+
+- name: Ensure disk size
+  community.general.proxmox_disk:
+    api_host: "{{ proxmox_api.host }}"
+    api_user: "{{ proxmox_api.user }}"
+    api_token_id: "{{ proxmox_api.token_id }}"
+    api_token_secret: "{{ proxmox_api.token_secret }}"
+    disk: scsi0
+    size: "{{ proxmox_template.size }}"
+    state: resized
+    vmid: "{{ proxmox_template.vmid }}"
+  delegate_to: localhost
+
+- name: Update disk properties
+  community.general.proxmox_disk:
+    api_host: "{{ proxmox_api.host }}"
+    api_user: "{{ proxmox_api.user }}"
+    api_token_id: "{{ proxmox_api.token_id }}"
+    api_token_secret: "{{ proxmox_api.token_secret }}"
+    discard: "on"
+    disk: scsi0
+    iothread: true
+    ssd: true
+    vmid: "{{ proxmox_template.vmid }}"
+  when: proxmox_template.ssd
+  delegate_to: localhost
+
+- name: Make the VM a template
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_api.host }}"
+    api_user: "{{ proxmox_api.user }}"
+    api_token_id: "{{ proxmox_api.token_id }}"
+    api_token_secret: "{{ proxmox_api.token_secret }}"
+    node: "{{ proxmox_node }}"
+    template: true
+    vmid: "{{ proxmox_template.vmid }}"
+    update: true
+  delegate_to: localhost

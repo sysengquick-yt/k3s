@@ -1,0 +1,12 @@
+---
+- name: Create proxmox template
+  hosts: proxmox
+  gather_facts: false
+  vars_files:
+    - vars/proxmox/vault.yml
+
+  tasks:
+    - name: Create proxmox template
+      ansible.builtin.include_role:
+        name: sysengquick.k3s.proxmox
+        tasks_from: create_template
