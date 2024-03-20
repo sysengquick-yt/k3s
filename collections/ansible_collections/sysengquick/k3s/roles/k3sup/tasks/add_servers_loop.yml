@@ -1,0 +1,22 @@
+---
+- name: Add server to k3s cluster
+  ansible.builtin.command:
+    cmd: >-
+      /usr/local/bin/k3sup join
+      {{ k3sup_connect_arg }}
+      --k3s-extra-args '{{ k3sup_extra_args_str }}'
+      --k3s-version '{{ k3sup_k3s_version }}'
+      --server
+      {{ k3sup_server_connect_arg }}
+      --ssh-key '{{ k3sup_ssh_key }}'
+      {{ k3sup_tls_san_arg }}
+      --user '{{ k3sup_user }}'
+  changed_when: true
+  register: result
+
+- name: Display output
+  ansible.builtin.debug:
+    msg:
+      cmd: "{{ result.cmd }}"
+      stdout: "{{ result.stdout_lines }}"
+  when: k3sup_debug

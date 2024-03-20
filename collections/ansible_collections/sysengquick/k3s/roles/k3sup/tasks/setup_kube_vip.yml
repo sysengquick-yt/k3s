@@ -1,0 +1,4 @@
+---
+- name: Include kube_vip tasks
+  ansible.builtin.include_tasks: setup_kube_vip_tasks.yml
+  when: k3sup_use_kube_vip

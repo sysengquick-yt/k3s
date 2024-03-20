@@ -1,0 +1,64 @@
+---
+- name: Apply kube-vip RBAC manifest
+  ansible.builtin.command:
+    cmd: kubectl apply -f "{{ k3sup_kube_vip_manifests.rbac }}"
+  changed_when: true
+  register: result
+
+- name: Display output
+  ansible.builtin.debug:
+    msg:
+      cmd: "{{ result.cmd }}"
+      stdout: "{{ result.stdout_lines }}"
+  when: k3sup_debug
+
+- name: Fetch kube-vip container image
+  ansible.builtin.command:
+    cmd: >-
+      ctr image pull {{ k3sup_kube_vip_image }}
+  changed_when: true
+  register: result
+
+- name: Display output
+  ansible.builtin.debug:
+    msg:
+      cmd: "{{ result.cmd }}"
+      stdout: "{{ result.stdout_lines }}"
+  when: k3sup_debug
+
+- name: Apply kube-vip daemonset manifest
+  ansible.builtin.shell:
+    cmd: >-
+      set -o pipefail &&
+      ctr run --rm --net-host {{ k3sup_kube_vip_image }} vip /kube-vip
+      manifest daemonset
+      --address {{ k3sup_vip }}
+      --arp
+      --controlplane
+      --inCluster
+      --interface {{ k3sup_iface }}
+      --leaderElection
+      --leaseDuration {{ k3sup_kube_vip_lease_duration }}
+      --leaseRenewDuration {{ k3sup_kube_vip_lease_renew_duration }}
+      --leaseRetry {{ k3sup_kube_vip_lease_retry }}
+      --services
+      --taint
+      |  tee /var/lib/rancher/k3s/server/manifests/kube-vip.yaml
+    executable: /bin/bash
+  changed_when: true
+  register: result
+
+- name: Display output
+  ansible.builtin.debug:
+    msg:
+      cmd: "{{ result.cmd }}"
+      stdout: "{{ result.stdout_lines }}"
+  when: k3sup_debug
+
+- name: Update kubectl config
+  ansible.builtin.lineinfile:
+    path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config"
+    regexp: '(\s+server:) https://'
+    line: '\1 https://{{ k3sup_vip }}:6443'
+    backrefs: true
+  delegate_to: localhost

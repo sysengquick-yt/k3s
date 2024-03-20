@@ -1,0 +1,6 @@
+---
+- name: Add workers to k3s cluster
+  ansible.builtin.include_tasks: add_workers_loop.yml
+  loop: "{{ cluster_nodes.workers }}"
+  loop_control:
+    loop_var: node

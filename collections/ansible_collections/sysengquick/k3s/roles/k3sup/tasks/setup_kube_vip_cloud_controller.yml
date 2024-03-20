@@ -1,0 +1,4 @@
+---
+- name: Include setup_kube_vip_cloud_controller_tasks
+  ansible.builtin.include_tasks: setup_kube_vip_cloud_controller_tasks.yml
+  when: k3sup_use_kube_vip_cloud_controller

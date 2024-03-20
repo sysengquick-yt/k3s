@@ -1,0 +1,6 @@
+---
+- name: Add servers to k3s cluster
+  ansible.builtin.include_tasks: add_servers_loop.yml
+  loop: "{{ cluster_nodes.servers[1:] }}"
+  loop_control:
+    loop_var: node

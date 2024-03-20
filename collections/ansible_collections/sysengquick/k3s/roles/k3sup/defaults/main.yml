@@ -1,0 +1,33 @@
+---
+k3sup_context: k3s-ha
+k3sup_debug: true
+k3sup_extra_args: []
+
+k3sup_iface: eth0
+
+k3sup_ip_range:
+  start: 192.168.1.150
+  end: 192.168.1.199
+
+# rancher 2.8 cannot run on 1.28 as of 2024-03-11
+k3sup_k3s_version: v1.27.11+k3s1
+
+# when true, prevent workloads from being scheduled on control plane nodes
+k3sup_k3s_server_noschedule: false
+
+# kube-vip lease parameters
+k3sup_kube_vip_lease_duration: 30 # default 5
+k3sup_kube_vip_lease_renew_duration: 10 # default 3
+k3sup_kube_vip_lease_retry: 3 # default 1
+
+k3sup_kube_vip_version: v0.7.1
+
+# connect and setup cluster with IP addresses rather than hostnames
+k3sup_prefer_ip: true
+
+k3sup_ssh_key: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/id_ed25519"
+
+k3sup_use_kube_vip: true
+k3sup_use_kube_vip_cloud_controller: true
+
+k3sup_vip: 192.168.1.100

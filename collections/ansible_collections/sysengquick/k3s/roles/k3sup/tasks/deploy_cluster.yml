@@ -1,0 +1,24 @@
+---
+- name: Deploy cluster
+  ansible.builtin.command:
+    cmd: >-
+      /usr/local/bin/k3sup install --cluster
+      --context '{{ k3sup_context }}'
+      {{ k3sup_connect_arg }}
+      --k3s-extra-args '{{ k3sup_extra_args_str }}'
+      --k3s-version '{{ k3sup_k3s_version }}'
+      --local-path '{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config'
+      --ssh-key '{{ k3sup_ssh_key }}'
+      {{ k3sup_tls_san_arg }}
+      --user '{{ k3sup_user }}'
+  changed_when: true
+  register: result
+  vars:
+    node: "{{ cluster_nodes.servers[0] }}"
+
+- name: Display output
+  ansible.builtin.debug:
+    msg:
+      cmd: "{{ result.cmd }}"
+      stdout: "{{ result.stdout_lines }}"
+  when: k3sup_debug

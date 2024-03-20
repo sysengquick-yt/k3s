@@ -1,0 +1,39 @@
+---
+k3sup_extra_args_str: >-
+  {{
+    (
+      k3sup_extra_args
+      + k3sup_k3s_disable_servicelb
+      + k3sup_k3s_server_noschedule_taint
+    )
+    | join(' ')
+  }}
+k3sup_k3s_disable_servicelb: >-
+  {{
+    ['--disable servicelb']
+    if (k3sup_use_kube_vip or k3sup_use_kube_vip_cloud_controller) else []
+  }}
+k3sup_k3s_server_noschedule_taint: >-
+  {{
+    ['--node-taint node-role.kubernetes.io/control-plane:NoSchedule']
+    if k3sup_k3s_server_noschedule else []
+  }}
+k3sup_kube_vip_image: "ghcr.io/kube-vip/kube-vip:{{ k3sup_kube_vip_version }}"
+k3sup_kube_vip_manifests:
+  rbac: https://kube-vip.io/manifests/rbac.yaml
+  cloud_controller: https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
+k3sup_connect_arg: >-
+  {{
+    ('--ip ' ~ node.ip) if k3sup_prefer_ip
+    else ('--host ' ~ node.name)
+  }}
+k3sup_server_connect_arg: >-
+  {{
+    ('--server-ip ' ~ cluster_nodes.servers[0].ip) if k3sup_prefer_ip
+    else ('--server-host ' ~ cluster_nodes.servers[0].name)
+  }}
+k3sup_tls_san_arg: >-
+  {{
+    ('--tls-san ' ~ k3sup_vip) if k3sup_use_kube_vip else ''
+  }}
+k3sup_user: "{{ node_ssh_user }}"
