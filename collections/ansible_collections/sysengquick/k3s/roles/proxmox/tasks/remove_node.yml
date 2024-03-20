@@ -1,0 +1,16 @@
+---
+- name: Remove k3s node
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_api.host }}"
+    api_user: "{{ proxmox_api.user }}"
+    api_token_id: "{{ proxmox_api.token_id }}"
+    api_token_secret: "{{ proxmox_api.token_secret }}"
+    name: "{{ node.name }}"
+    force: true
+    node: "{{ proxmox_node }}"
+    state: absent
+    timeout: 30
+  delay: 10
+  register: result
+  retries: 3
+  until: result is not failed
