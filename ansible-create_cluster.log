@@ -1,0 +1,308 @@
+
+PLAY [Create proxmox template] *************************************************
+
+TASK [Create proxmox template] *************************************************
+
+TASK [sysengquick.k3s.proxmox : Test sudo access] ******************************
+skipping: [proxmox.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Create template VM] ****************************
+changed: [proxmox.technoplaza.net -> localhost]
+
+TASK [sysengquick.k3s.proxmox : Download cloud image] **************************
+ok: [proxmox.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Get disk imfo] *********************************
+ok: [proxmox.technoplaza.net -> localhost]
+
+TASK [sysengquick.k3s.proxmox : Register template_attach_disk] *****************
+ok: [proxmox.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Get disk info] *********************************
+ok: [proxmox.technoplaza.net -> localhost]
+
+TASK [sysengquick.k3s.proxmox : Register disk status] **************************
+ok: [proxmox.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Create disk from cloud image] ******************
+changed: [proxmox.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Create disk from cloud image] ******************
+skipping: [proxmox.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Attach disk] ***********************************
+changed: [proxmox.technoplaza.net -> localhost]
+
+TASK [sysengquick.k3s.proxmox : Remove cloud image download] *******************
+skipping: [proxmox.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Ensure disk size] ******************************
+changed: [proxmox.technoplaza.net -> localhost]
+
+TASK [sysengquick.k3s.proxmox : Update disk properties] ************************
+changed: [proxmox.technoplaza.net -> localhost]
+
+TASK [sysengquick.k3s.proxmox : Make the VM a template] ************************
+changed: [proxmox.technoplaza.net -> localhost]
+
+PLAY [Create proxmox nodes] ****************************************************
+
+TASK [Create proxmox nodes] ****************************************************
+
+TASK [sysengquick.k3s.proxmox : Run tasks on all k3s nodes] ********************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/create_node.yml for localhost => (item={'name': 's1.k3s.local.technoplaza.net', 'ip': '192.168.1.101'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/create_node.yml for localhost => (item={'name': 's2.k3s.local.technoplaza.net', 'ip': '192.168.1.102'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/create_node.yml for localhost => (item={'name': 's3.k3s.local.technoplaza.net', 'ip': '192.168.1.103'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/create_node.yml for localhost => (item={'name': 'w1.k3s.local.technoplaza.net', 'ip': '192.168.1.111'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/create_node.yml for localhost => (item={'name': 'w2.k3s.local.technoplaza.net', 'ip': '192.168.1.112'})
+
+TASK [sysengquick.k3s.proxmox : Create k3s node from template] *****************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Register vmid] *********************************
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Update IP configuration] ***********************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/start_node.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Assert variable definitions] *******************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox] *****************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/pause_for_proxmox.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox to catch up] *****************
+Pausing for 15 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Create k3s node from template] *****************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Register vmid] *********************************
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Update IP configuration] ***********************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/start_node.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Assert variable definitions] *******************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox] *****************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/pause_for_proxmox.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox to catch up] *****************
+Pausing for 15 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Create k3s node from template] *****************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Register vmid] *********************************
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Update IP configuration] ***********************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/start_node.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Assert variable definitions] *******************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox] *****************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/pause_for_proxmox.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox to catch up] *****************
+Pausing for 15 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Create k3s node from template] *****************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Register vmid] *********************************
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Update IP configuration] ***********************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/start_node.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Assert variable definitions] *******************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox] *****************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/pause_for_proxmox.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox to catch up] *****************
+Pausing for 15 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Create k3s node from template] *****************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Register vmid] *********************************
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Update IP configuration] ***********************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/start_node.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Assert variable definitions] *******************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox] *****************************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/pause_for_proxmox.yml for localhost
+
+TASK [sysengquick.k3s.proxmox : Pause for proxmox to catch up] *****************
+Pausing for 15 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Start node] ************************************
+changed: [localhost]
+
+PLAY [Prep nodes] **************************************************************
+
+TASK [Prep nodes] **************************************************************
+
+TASK [sysengquick.k3s.proxmox : Wait for server to startup] ********************
+ok: [w1.k3s.local.technoplaza.net]
+ok: [s1.k3s.local.technoplaza.net]
+ok: [s2.k3s.local.technoplaza.net]
+ok: [s3.k3s.local.technoplaza.net]
+ok: [w2.k3s.local.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Install packages] ******************************
+FAILED - RETRYING: [w2.k3s.local.technoplaza.net]: Install packages (3 retries left).
+changed: [s1.k3s.local.technoplaza.net]
+changed: [w1.k3s.local.technoplaza.net]
+changed: [s2.k3s.local.technoplaza.net]
+changed: [s3.k3s.local.technoplaza.net]
+changed: [w2.k3s.local.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Start qemu-guest-agent] ************************
+changed: [w2.k3s.local.technoplaza.net]
+changed: [w1.k3s.local.technoplaza.net]
+changed: [s3.k3s.local.technoplaza.net]
+changed: [s1.k3s.local.technoplaza.net]
+changed: [s2.k3s.local.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Load installed packages] ***********************
+ok: [s2.k3s.local.technoplaza.net]
+ok: [w1.k3s.local.technoplaza.net]
+ok: [s3.k3s.local.technoplaza.net]
+ok: [w2.k3s.local.technoplaza.net]
+ok: [s1.k3s.local.technoplaza.net]
+
+TASK [sysengquick.k3s.proxmox : Stop and disable ufw] **************************
+skipping: [s1.k3s.local.technoplaza.net]
+skipping: [s2.k3s.local.technoplaza.net]
+skipping: [s3.k3s.local.technoplaza.net]
+skipping: [w1.k3s.local.technoplaza.net]
+skipping: [w2.k3s.local.technoplaza.net]
+
+PLAY [Snapshot cluster] ********************************************************
+
+TASK [Snapshot all k3s nodes] **************************************************
+
+TASK [sysengquick.k3s.proxmox : Run tasks on all k3s nodes] ********************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/snapshot.yml for localhost => (item={'name': 's1.k3s.local.technoplaza.net', 'ip': '192.168.1.101'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/snapshot.yml for localhost => (item={'name': 's2.k3s.local.technoplaza.net', 'ip': '192.168.1.102'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/snapshot.yml for localhost => (item={'name': 's3.k3s.local.technoplaza.net', 'ip': '192.168.1.103'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/snapshot.yml for localhost => (item={'name': 'w1.k3s.local.technoplaza.net', 'ip': '192.168.1.111'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/snapshot.yml for localhost => (item={'name': 'w2.k3s.local.technoplaza.net', 'ip': '192.168.1.112'})
+
+TASK [sysengquick.k3s.proxmox : Check proxmox_snapshot variable] ***************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Proxmox snapshot] ******************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Check proxmox_snapshot variable] ***************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Proxmox snapshot] ******************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Check proxmox_snapshot variable] ***************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Proxmox snapshot] ******************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Check proxmox_snapshot variable] ***************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Proxmox snapshot] ******************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Check proxmox_snapshot variable] ***************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [sysengquick.k3s.proxmox : Proxmox snapshot] ******************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=60   changed=20   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+proxmox.technoplaza.net    : ok=11   changed=6    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+s1.k3s.local.technoplaza.net : ok=4    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+s2.k3s.local.technoplaza.net : ok=4    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+s3.k3s.local.technoplaza.net : ok=4    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+w1.k3s.local.technoplaza.net : ok=4    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+w2.k3s.local.technoplaza.net : ok=4    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+
