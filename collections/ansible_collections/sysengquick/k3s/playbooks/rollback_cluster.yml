@@ -1,0 +1,31 @@
+---
+- name: Rollback cluster
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vars/proxmox/vault.yml
+
+  tasks:
+    - name: Rollback snapshot on all k3s nodes
+      ansible.builtin.include_role:
+        name: sysengquick.k3s.proxmox
+        tasks_from: loop_nodes
+      vars:
+        proxmox_loop_task: snapshot.yml
+        proxmox_snapshot_state: rollback
+
+    - name: Pause for proxmox
+      ansible.builtin.include_role:
+        name: sysengquick.k3s.proxmox
+        tasks_from: pause_for_proxmox
+      vars:
+        proxmox_pause_timeout: 15
+
+    - name: Restart hosts
+      ansible.builtin.include_role:
+        name: sysengquick.k3s.proxmox
+        tasks_from: loop_nodes
+      vars:
+        proxmox_node_name: "{{ node.name }}"
+        proxmox_loop_task: start_node.yml
+        proxmox_pause_timeout: 1

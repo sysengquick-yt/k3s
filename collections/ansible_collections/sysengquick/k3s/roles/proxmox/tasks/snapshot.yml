@@ -1,0 +1,15 @@
+---
+- name: Check proxmox_snapshot variable
+  ansible.builtin.assert:
+    that: proxmox_snapshot is defined
+    fail_msg: proxmox_snapshot is required
+
+- name: Proxmox snapshot
+  community.general.proxmox_snap:
+    api_host: "{{ proxmox_api.host }}"
+    api_user: "{{ proxmox_api.user }}"
+    api_token_id: "{{ proxmox_api.token_id }}"
+    api_token_secret: "{{ proxmox_api.token_secret }}"
+    hostname: "{{ node.name }}"
+    snapname: "{{ proxmox_snapshot }}"
+    state: "{{ proxmox_snapshot_state | default('present') }}"

@@ -1,0 +1,13 @@
+- name: Snapshot cluster
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vars/proxmox/vault.yml
+
+  tasks:
+    - name: Snapshot all k3s nodes
+      ansible.builtin.include_role:
+        name: sysengquick.k3s.proxmox
+        tasks_from: loop_nodes
+      vars:
+        proxmox_loop_task: snapshot.yml
