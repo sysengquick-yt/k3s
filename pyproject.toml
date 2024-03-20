@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "k3s"
+version = "1.0.0"
+description = "k3s demo repo for syseng quick"
+authors = ["John Ratliff <john@technoplaza.net>"]
+license = "APACHE-2.0"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+ansible-core = "<2.17"
+ansible-lint = { version = "<7.0.0", markers = 'platform_system != "Windows"' }
+proxmoxer = "^2.0.1"
+requests = "^2.31.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
