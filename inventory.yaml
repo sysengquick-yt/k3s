@@ -1,0 +1,31 @@
+all:
+  children:
+    k3s:
+      children:
+        servers:
+          children:
+            k3s_cp_server:
+              hosts:
+                s1.k3s.local.technoplaza.net: {}
+          hosts:
+            s1.k3s.local.technoplaza.net:
+              ansible_host: 192.168.1.101
+            s2.k3s.local.technoplaza.net:
+              ansible_host: 192.168.1.102
+            s3.k3s.local.technoplaza.net:
+              ansible_host: 192.168.1.103
+        workers:
+          hosts:
+            w1.k3s.local.technoplaza.net:
+              ansible_host: 192.168.1.111
+            w2.k3s.local.technoplaza.net:
+              ansible_host: 192.168.1.112
+      vars:
+        ansible_ssh_user: pve
+    proxmox:
+      hosts:
+        proxmox.technoplaza.net: {}
+      vars:
+        ansible_ssh_user: ansible
+  vars:
+    ansible_ssh_common_args: -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null

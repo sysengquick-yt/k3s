@@ -1,0 +1,38 @@
+---
+################################################################################
+# Role overrides
+#
+# Role defaults WILL need some update
+#
+# I have listed several keys I think are likely to be different for you
+# This list is not meant to be exhaustive
+# Please read the defaults and update them accordingly
+#
+# This file is only here for documentation purposes
+# I do not recommend adding these values to this file
+#
+################################################################################
+# collections/ansible_collections/sysengquick/k3s/roles/k3sup/defaults/main.yml
+#
+# k3sup_ip_range
+#   The kube-vip cloud controller IP range
+# k3sup_vip
+#   The kube-vip virtual IP for the k3s API
+#
+################################################################################
+# collections/ansible_collections/sysengquick/k3s/roles/proxmox/defaults/main.yml
+#
+# proxmox_node
+#   proxmox node name in your cluster
+#
+# proxmox_template.sshkeys
+#   ssh key for the cloud-init template
+# proxmox_template.storage
+#   proxmox storage ID for the disks
+#
+################################################################################
+# collections/ansible_collections/sysengquick/k3s/roles/rancher/defaults/main.yml
+#
+# rancher_hostname
+#   rancher FQDN
+################################################################################
