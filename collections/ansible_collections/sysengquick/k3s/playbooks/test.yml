@@ -1,0 +1,9 @@
+---
+- name: Test playbook to verify environment setup
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Testing
+      ansible.builtin.debug:
+        msg: Testing
