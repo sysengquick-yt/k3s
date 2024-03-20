@@ -1,0 +1,17 @@
+---
+version: "3.8"
+
+services:
+  k3s:
+    image: ghcr.io/sysengquick/k3s:latest
+    command: sleep infinity
+    volumes:
+      - kube:/home/vscode/.kube
+      - bash_history:/bash_history
+      - ${HOME}/private:/private:cached
+      - ${HOME}/.ssh:/home/vscode/.ssh:cached
+      - ..:/workspace:cached
+
+volumes:
+  kube:
+  bash_history:
