@@ -1,0 +1,14 @@
+---
+- name: Create the k3s template
+  ansible.builtin.import_playbook: sysengquick.k3s.create_template
+
+- name: Create the k3s nodes
+  ansible.builtin.import_playbook: sysengquick.k3s.create_nodes
+
+- name: Prep the k3s nodes
+  ansible.builtin.import_playbook: sysengquick.k3s.prep_nodes
+
+- name: Snapshot the cluster
+  ansible.builtin.import_playbook: sysengquick.k3s.snapshot_cluster
+  vars:
+    proxmox_snapshot: base
