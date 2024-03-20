@@ -1,0 +1,19 @@
+---
+- name: Deploy cert-manager with helm
+  ansible.builtin.command:
+    cmd: >-
+      helm upgrade
+      --install cert-manager jetstack/cert-manager
+      --create-namespace
+      --namespace cert-manager
+      --set installCRDs=true
+      --version {{ rancher_cert_manager_version }}
+  changed_when: true
+  register: result
+
+- name: Display output
+  ansible.builtin.debug:
+    msg:
+      cmd: "{{ result.cmd }}"
+      stdout: "{{ result.stdout_lines }}"
+  when: rancher_debug

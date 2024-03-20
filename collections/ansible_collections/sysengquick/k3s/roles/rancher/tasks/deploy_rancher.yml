@@ -1,0 +1,42 @@
+---
+- name: Deploy rancher with helm
+  ansible.builtin.command:
+    cmd: >-
+      helm upgrade
+      --install rancher rancher-stable/rancher
+      --create-namespace
+      --namespace cattle-system
+      --set bootstrapPassword={{ rancher_bootstrap_password }}
+      --set hostname={{ rancher_hostname }}
+      --set replicas={{ rancher_replicas }}
+      --version {{ rancher_version }}
+  changed_when: true
+  register: result
+
+- name: Display output
+  ansible.builtin.debug:
+    msg:
+      cmd: "{{ result.cmd }}"
+      stdout: "{{ result.stdout_lines }}"
+  when: rancher_debug
+
+- name: Add load balancer service for rancher
+  when: rancher_lb_service_enable
+  block:
+    - name: Expose rancher load balancer service
+      ansible.builtin.command:
+        cmd: >-
+          kubectl expose deployment rancher
+          --name={{ rancher_lb_service_name }}
+          --port=443
+          -n cattle-system
+          --type=LoadBalancer
+      changed_when: true
+      register: result
+
+    - name: Display output
+      ansible.builtin.debug:
+        msg:
+          cmd: "{{ result.cmd }}"
+          stdout: "{{ result.stdout_lines }}"
+      when: rancher_debug

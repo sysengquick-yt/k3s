@@ -1,0 +1,15 @@
+---
+- name: Deploy rancher
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Deploy cert-manager
+      ansible.builtin.include_role:
+        name: sysengquick.k3s.rancher
+        tasks_from: deploy_cert_manager
+
+    - name: Deploy rancher
+      ansible.builtin.include_role:
+        name: sysengquick.k3s.rancher
+        tasks_from: deploy_rancher
