@@ -3,10 +3,6 @@ all:
     k3s:
       children:
         servers:
-          children:
-            k3s_cp_server:
-              hosts:
-                s1.k3s.local.technoplaza.net: {}
           hosts:
             s1.k3s.local.technoplaza.net:
               ansible_host: 192.168.1.101

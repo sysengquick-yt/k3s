@@ -10,7 +10,7 @@
         tasks_from: deploy_cluster
 
 - name: Setup kube-vip
-  hosts: k3s_cp_server
+  hosts: "{{ hostvars['localhost']['cluster_nodes']['servers'][0]['name'] }}"
   become: true
   gather_facts: false
 

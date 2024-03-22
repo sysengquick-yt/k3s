@@ -29,7 +29,6 @@ def main():
                 "k3s": {
                     "children": {
                         "servers": {
-                            "children": {"k3s_cp_server": {"hosts": {}}},
                             "hosts": {},
                         },
                         "workers": {"hosts": {}},
@@ -54,11 +53,6 @@ def main():
         worker["name"]: {"ansible_host": worker["ip"]}
         for worker in config["cluster_nodes"]["workers"]
     }
-
-    k3s_cp_server = config["cluster_nodes"]["servers"][0]
-    inventory["all"]["children"]["k3s"]["children"]["servers"]["children"][
-        "k3s_cp_server"
-    ]["hosts"] = {k3s_cp_server["name"]: {}}
 
     inventory_path = f"{path_prefix}/inventory.yaml"
 
