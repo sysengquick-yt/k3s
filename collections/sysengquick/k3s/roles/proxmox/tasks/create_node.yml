@@ -26,7 +26,7 @@
     api_token_id: "{{ proxmox_api.token_id }}"
     api_token_secret: "{{ proxmox_api.token_secret }}"
     ipconfig:
-      ipconfig0: "ip={{ node.ip }}/{{ cluster_network.cidr }},gw={{ cluster_network.gateway }}"
+      ipconfig0: "ip={{ node.ip }}/{{ proxmox_network.cidr }},gw={{ proxmox_network.gateway }}"
     node: "{{ proxmox_node }}"
     state: present
     update: true
