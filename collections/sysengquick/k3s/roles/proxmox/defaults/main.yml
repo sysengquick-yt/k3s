@@ -11,7 +11,7 @@ proxmox_image_dest: "/tmp/{{ proxmox_image.name }}"
 proxmox_node: proxmox
 
 proxmox_template:
-  block_storage: false
+  block_storage: true
   bridge: vmbr0
   ciuser: "{{ node_ssh_user }}"
   cipassword: "{{ vault.proxmox_template.cipassword }}"
@@ -24,7 +24,7 @@ proxmox_template:
   ssd: true
   sshkeys: |
     ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDaZmy03rApaPZNuN1I8sfmVM/vLv+WD8c2smYyBLJJe sysengquick@wsl2
-  storage: local
+  storage: zfs
   vmid: 2500
 
 proxmox_timeouts:
