@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/python:1-3.12-bullseye
 
 # install poetry
-RUN python3 -m pip install 'poetry<2.0.0'
+RUN python3 -m pip install poetry~=1.8.2
 
 # install poetry dependencies
 WORKDIR /app
