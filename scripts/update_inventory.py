@@ -8,7 +8,7 @@ _DEFAULT_PROXMOX_SSH_USER: str = "ansible"
 def main():
     path_prefix: str = ".." if os.getcwd().endswith("/scripts") else "."
 
-    config_path = f"{path_prefix}/collections/ansible_collections/sysengquick/k3s/playbooks/group_vars/all/cluster.yml"
+    config_path = f"{path_prefix}/collections/sysengquick/k3s/playbooks/group_vars/all/cluster.yml"
 
     with open(config_path, "r") as f:
         config: dict = yaml.safe_load(f)

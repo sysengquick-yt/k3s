@@ -12,7 +12,7 @@ RUN poetry config virtualenvs.create false && poetry install
 # install collection requirements
 COPY collections/requirements.yml /tmp
 RUN su vscode -c "ansible-galaxy collection install -r requirements.yml"
-RUN su vscode -c "ln -s /workspace/collections/ansible_collections/sysengquick/ ~/.ansible/collections/ansible_collections/"
+RUN su vscode -c "ln -s /workspace/collections/sysengquick ~/.ansible/collections/ansible_collections/"
 
 # enable git bash completion and preserve bash history
 RUN su vscode -c "echo 'source /usr/share/bash-completion/completions/git' >> ~/.bashrc"
