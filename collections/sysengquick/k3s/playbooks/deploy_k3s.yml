@@ -25,7 +25,7 @@
         name: sysengquick.k3s.k3sup
         tasks_from: setup_kube_vip_cloud_controller
 
-- name: Update kubectl config
+- name: Add additional nodes to k3s cluster
   hosts: localhost
   gather_facts: false
 
