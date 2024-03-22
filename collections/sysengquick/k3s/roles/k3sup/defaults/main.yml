@@ -1,6 +1,6 @@
 ---
 k3sup_context: k3s-ha
-k3sup_debug: true
+k3sup_debug: "{{ global_debug | default(true) }}"
 k3sup_extra_args: []
 
 k3sup_iface: eth0

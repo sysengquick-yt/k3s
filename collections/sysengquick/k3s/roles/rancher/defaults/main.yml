@@ -1,7 +1,7 @@
 ---
 rancher_bootstrap_password: AReallyGoodP@ssw0rd
 rancher_cert_manager_version: v1.14.4
-rancher_debug: true
+rancher_debug: "{{ global_debug | default(true) }}"
 rancher_hostname: rancher.k3s.technoplaza.net
 rancher_lb_service_enable: false
 rancher_lb_service_name: rancher-lb
