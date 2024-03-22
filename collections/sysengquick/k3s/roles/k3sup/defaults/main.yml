@@ -1,10 +1,18 @@
 ---
+# kubeconfig context -- mostly cosmetic
 k3sup_context: k3s-ha
+
+# display CLI command output
 k3sup_debug: "{{ global_debug | default(true) }}"
+
+# additional arguments to pass to k3s on server nodes
+# e.g. --disable traefik
 k3sup_extra_args: []
 
+# the default interface on the cluster nodes
 k3sup_iface: eth0
 
+# range of IPs kube-vip cloud controller will assign
 k3sup_ip_range:
   start: 192.168.1.150
   end: 192.168.1.199
@@ -25,9 +33,12 @@ k3sup_kube_vip_version: v0.7.1
 # connect and setup cluster with IP addresses rather than hostnames
 k3sup_prefer_ip: true
 
+# ssh key ks3up will use to connect to the nodes
 k3sup_ssh_key: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/id_ed25519"
 
+# enable/disable installation of kube-vip / kube-vip cloud controller
 k3sup_use_kube_vip: true
 k3sup_use_kube_vip_cloud_controller: true
 
+# VIP used by kube-vip for the control plane nodes
 k3sup_vip: 192.168.1.100
