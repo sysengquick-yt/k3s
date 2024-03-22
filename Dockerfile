@@ -4,13 +4,13 @@ FROM mcr.microsoft.com/devcontainers/python:1-3.12-bullseye
 RUN python3 -m pip install 'poetry<2.0.0'
 
 # install poetry dependencies
-WORKDIR /tmp
+WORKDIR /app
 
-COPY poetry.lock pyproject.toml /tmp
+COPY poetry.lock pyproject.toml /app
 RUN poetry config virtualenvs.create false && poetry install
 
 # install collection requirements
-COPY collections/requirements.yml /tmp
+COPY collections/requirements.yml /app
 RUN su vscode -c "ansible-galaxy collection install -r requirements.yml"
 RUN su vscode -c "ln -s /workspace/collections/sysengquick ~/.ansible/collections/ansible_collections/"
 
