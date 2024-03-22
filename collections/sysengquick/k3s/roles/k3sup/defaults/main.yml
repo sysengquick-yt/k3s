@@ -30,6 +30,9 @@ k3sup_kube_vip_lease_retry: 3 # default 1
 
 k3sup_kube_vip_version: v0.7.1
 
+# where to place the kubeconfig file after installation
+k3sup_local_path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config"
+
 # connect and setup cluster with IP addresses rather than hostnames
 k3sup_prefer_ip: true
 
