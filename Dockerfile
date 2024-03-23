@@ -1,18 +1,23 @@
 FROM mcr.microsoft.com/devcontainers/python:1-3.12-bullseye
 
+# OCI labels
+LABEL org.opencontainers.image.source=https://github.com/sysengquick/k3s
+LABEL org.opencontainers.image.description="devcontainer image for building sysenquick k3s cluster"
+LABEL org.opencontainers.image.licenses=Apache-2.0
+
 # install poetry
-RUN python3 -m pip install 'poetry<2.0.0'
+RUN python3 -m pip install poetry~=1.8.2
 
 # install poetry dependencies
-WORKDIR /tmp
+WORKDIR /app
 
-COPY poetry.lock pyproject.toml /tmp
+COPY poetry.lock pyproject.toml /app
 RUN poetry config virtualenvs.create false && poetry install
 
 # install collection requirements
-COPY collections/requirements.yml /tmp
+COPY collections/requirements.yml /app
 RUN su vscode -c "ansible-galaxy collection install -r requirements.yml"
-RUN su vscode -c "ln -s /workspace/collections/ansible_collections/sysengquick/ ~/.ansible/collections/ansible_collections/"
+RUN su vscode -c "ln -s /workspace/collections/sysengquick ~/.ansible/collections/ansible_collections/"
 
 # enable git bash completion and preserve bash history
 RUN su vscode -c "echo 'source /usr/share/bash-completion/completions/git' >> ~/.bashrc"
@@ -44,8 +49,3 @@ RUN apt-get update && apt-get install -y helm
 RUN su vscode -c "helm repo add rancher-stable https://releases.rancher.com/server-charts/stable"
 RUN su vscode -c "helm repo add jetstack https://charts.jetstack.io"
 RUN su vscode -c "helm repo update"
-
-# OCI labels
-LABEL org.opencontainers.image.source=https://github.com/sysengquick/k3s
-LABEL org.opencontainers.image.description="devcontainer image for building sysenquick k3s cluster"
-LABEL org.opencontainers.image.licenses=Apache-2.0

@@ -10,7 +10,7 @@
         tasks_from: deploy_cluster
 
 - name: Setup kube-vip
-  hosts: k3s_cp_server
+  hosts: "{{ hostvars['localhost']['cluster_nodes']['servers'][0]['name'] }}"
   become: true
   gather_facts: false
 
@@ -25,7 +25,7 @@
         name: sysengquick.k3s.k3sup
         tasks_from: setup_kube_vip_cloud_controller
 
-- name: Update kubectl config
+- name: Add additional nodes to k3s cluster
   hosts: localhost
   gather_facts: false
 

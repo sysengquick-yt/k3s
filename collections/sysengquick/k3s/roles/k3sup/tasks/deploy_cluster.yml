@@ -7,7 +7,7 @@
       {{ k3sup_connect_arg }}
       --k3s-extra-args '{{ k3sup_extra_args_str }}'
       --k3s-version '{{ k3sup_k3s_version }}'
-      --local-path '{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config'
+      --local-path '{{ k3sup_local_path }}'
       --ssh-key '{{ k3sup_ssh_key }}'
       {{ k3sup_tls_san_arg }}
       --user '{{ k3sup_user }}'

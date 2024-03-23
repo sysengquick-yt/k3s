@@ -1,9 +1,4 @@
 ---
-# k3s cluster network configuration
-cluster_network:
-  cidr: 24
-  gateway: 192.168.1.1
-
 # cluster nodes
 cluster_nodes:
   servers:
@@ -25,6 +20,11 @@ node_ssh_user: pve
 #
 # These values don't matter if you aren't using proxmox
 #
+
+# k3s cluster network configuration
+proxmox_network:
+  cidr: 24
+  gateway: 192.168.1.1
 
 # proxmox server hostname/IP
 proxmox_server: proxmox.technoplaza.net

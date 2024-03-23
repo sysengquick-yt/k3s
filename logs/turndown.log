@@ -1,0 +1,39 @@
+
+PLAY [Remove k3s nodes and template] *******************************************
+
+TASK [Remove k3s nodes] ********************************************************
+
+TASK [sysengquick.k3s.proxmox : Run tasks on all k3s nodes] ********************
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/remove_node.yml for localhost => (item={'name': 's1.k3s.local.technoplaza.net', 'ip': '192.168.1.101'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/remove_node.yml for localhost => (item={'name': 's2.k3s.local.technoplaza.net', 'ip': '192.168.1.102'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/remove_node.yml for localhost => (item={'name': 's3.k3s.local.technoplaza.net', 'ip': '192.168.1.103'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/remove_node.yml for localhost => (item={'name': 'w1.k3s.local.technoplaza.net', 'ip': '192.168.1.111'})
+included: /home/vscode/.ansible/collections/ansible_collections/sysengquick/k3s/roles/proxmox/tasks/remove_node.yml for localhost => (item={'name': 'w2.k3s.local.technoplaza.net', 'ip': '192.168.1.112'})
+
+TASK [sysengquick.k3s.proxmox : Remove k3s node] *******************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Remove k3s node] *******************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Remove k3s node] *******************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Remove k3s node] *******************************
+changed: [localhost]
+
+TASK [sysengquick.k3s.proxmox : Remove k3s node] *******************************
+changed: [localhost]
+
+TASK [Remove k3s template] *****************************************************
+
+TASK [sysengquick.k3s.proxmox : Remove template] *******************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=11   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+real	0m37.363s
+user	0m4.957s
+sys	0m0.476s
