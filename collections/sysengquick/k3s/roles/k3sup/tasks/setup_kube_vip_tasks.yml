@@ -42,7 +42,7 @@
       --leaseRetry {{ k3sup_kube_vip_lease_retry }}
       --services
       --taint
-      |  tee /var/lib/rancher/k3s/server/manifests/kube-vip.yaml
+      | tee /var/lib/rancher/k3s/server/manifests/kube-vip.yaml
     executable: /bin/bash
   changed_when: true
   register: result
