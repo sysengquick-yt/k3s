@@ -10,6 +10,11 @@ proxmox_image_url:
   image: "{{ proxmox_image.base ~ proxmox_image.name }}"
   digest: "{{ proxmox_image.base ~ proxmox_image.digest }}"
 proxmox_images:
+  alma_linux_8:
+    base: https://repo.almalinux.org/almalinux/8/cloud/x86_64/images/
+    name: AlmaLinux-8-GenericCloud-latest.x86_64.qcow2
+    digest: CHECKSUM
+    method: sha256
   alma_linux_9:
     base: https://repo.almalinux.org/almalinux/9/cloud/x86_64/images/
     name: AlmaLinux-9-GenericCloud-latest.x86_64.qcow2
