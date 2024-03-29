@@ -8,16 +8,18 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "redhat.ansible",
+        "bierner.markdown-preview-github-styles",
+        "DavidAnson.vscode-markdownlint",
         "dhoeric.ansible-vault",
-        "tamasfe.even-better-toml",
-        "mhutchie.git-graph",
         "eamodio.gitlens",
-        "oderwat.indent-rainbow",
-        "yzhang.markdown-all-in-one",
         "esbenp.prettier-vscode",
+        "mhutchie.git-graph",
         "ms-python.black-formatter",
-        "ms-python.flake8"
+        "ms-python.flake8",
+        "oderwat.indent-rainbow",
+        "redhat.ansible",
+        "tamasfe.even-better-toml",
+        "yzhang.markdown-all-in-one"
       ],
       "settings": {
         "[json]": {

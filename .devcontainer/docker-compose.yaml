@@ -1,6 +1,4 @@
 ---
-version: "3.8"
-
 services:
   k3s:
     image: ghcr.io/sysengquick/k3s:1.0.1
