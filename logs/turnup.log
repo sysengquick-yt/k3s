@@ -1056,13 +1056,29 @@ s2     Ready    control-plane,etcd,master   117s    v1.27.11+k3s1   192.168.1.52
 s3     Ready    control-plane,etcd,master   106s    v1.27.11+k3s1   192.168.1.53   <none>        Ubuntu 22.04.4 LTS   5.15.0-1053-kvm   containerd://1.7.11-k3s2.27
 w1     Ready    <none>                      100s    v1.27.11+k3s1   192.168.1.54   <none>        Ubuntu 22.04.4 LTS   5.15.0-1053-kvm   containerd://1.7.11-k3s2.27
 w2     Ready    <none>                      94s     v1.27.11+k3s1   192.168.1.55   <none>        Ubuntu 22.04.4 LTS   5.15.0-1053-kvm   containerd://1.7.11-k3s2.27
-+ kubectl get nodes --all-namespaces -o wide
-NAME   STATUS   ROLES                       AGE     VERSION         INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
-s1     Ready    control-plane,etcd,master   2m18s   v1.27.11+k3s1   192.168.1.51   <none>        Ubuntu 22.04.4 LTS   5.15.0-1053-kvm   containerd://1.7.11-k3s2.27
-s2     Ready    control-plane,etcd,master   117s    v1.27.11+k3s1   192.168.1.52   <none>        Ubuntu 22.04.4 LTS   5.15.0-1053-kvm   containerd://1.7.11-k3s2.27
-s3     Ready    control-plane,etcd,master   106s    v1.27.11+k3s1   192.168.1.53   <none>        Ubuntu 22.04.4 LTS   5.15.0-1053-kvm   containerd://1.7.11-k3s2.27
-w1     Ready    <none>                      100s    v1.27.11+k3s1   192.168.1.54   <none>        Ubuntu 22.04.4 LTS   5.15.0-1053-kvm   containerd://1.7.11-k3s2.27
-w2     Ready    <none>                      94s     v1.27.11+k3s1   192.168.1.55   <none>        Ubuntu 22.04.4 LTS   5.15.0-1053-kvm   containerd://1.7.11-k3s2.27
++ kubectl get pods --all-namespaces -o wide
+NAMESPACE                         NAME                                       READY   STATUS      RESTARTS   AGE    IP             NODE   NOMINATED NODE   READINESS GATES
+cattle-fleet-system               fleet-controller-6fc8c65685-cmqt6          1/1     Running     0          102m   10.42.3.4      w1     <none>           <none>
+cattle-fleet-system               gitjob-6c8875d84d-fv2mp                    1/1     Running     0          102m   10.42.1.3      s2     <none>           <none>
+cattle-provisioning-capi-system   capi-controller-manager-79ddf9b9d8-f7cq4   1/1     Running     0          100m   10.42.4.8      w2     <none>           <none>
+cattle-system                     helm-operation-nrwh4                       0/2     Completed   0          85s    10.42.2.8      s3     <none>           <none>
+cattle-system                     rancher-7bcd45c474-qzcjl                   1/1     Running     0          103m   10.42.2.3      s3     <none>           <none>
+cattle-system                     rancher-7bcd45c474-tc8w8                   1/1     Running     0          103m   10.42.1.2      s2     <none>           <none>
+cattle-system                     rancher-7bcd45c474-ztwq2                   1/1     Running     0          103m   10.42.4.4      w2     <none>           <none>
+cattle-system                     rancher-webhook-7476c74c6c-6z5n5           1/1     Running     0          101m   10.42.4.7      w2     <none>           <none>
+cert-manager                      cert-manager-5f8646db6b-tdbp4              1/1     Running     0          103m   10.42.3.3      w1     <none>           <none>
+cert-manager                      cert-manager-cainjector-5cf5f57dd7-66bnh   1/1     Running     0          103m   10.42.3.2      w1     <none>           <none>
+cert-manager                      cert-manager-webhook-687b7f8b97-rb8tv      1/1     Running     0          103m   10.42.4.2      w2     <none>           <none>
+kube-system                       coredns-77ccd57875-fgz4g                   1/1     Running     0          104m   10.42.0.6      s1     <none>           <none>
+kube-system                       helm-install-traefik-crd-zm2cw             0/1     Completed   0          104m   10.42.0.5      s1     <none>           <none>
+kube-system                       helm-install-traefik-rxx5r                 0/1     Completed   2          104m   10.42.0.2      s1     <none>           <none>
+kube-system                       kube-vip-cloud-provider-578d9b7bf7-c5pp4   1/1     Running     0          104m   10.42.0.7      s1     <none>           <none>
+kube-system                       kube-vip-ds-547ps                          1/1     Running     0          103m   192.168.1.53   s3     <none>           <none>
+kube-system                       kube-vip-ds-67z2p                          1/1     Running     0          104m   192.168.1.51   s1     <none>           <none>
+kube-system                       kube-vip-ds-nbkmr                          1/1     Running     0          104m   192.168.1.52   s2     <none>           <none>
+kube-system                       local-path-provisioner-79ffd768b5-b6x9r    1/1     Running     0          104m   10.42.0.4      s1     <none>           <none>
+kube-system                       metrics-server-648b5df564-mk4jq            1/1     Running     0          104m   10.42.0.3      s1     <none>           <none>
+kube-system                       traefik-768bdcdcdd-klkjm                   1/1     Running     0          103m   10.42.2.2      s3     <none>           <none>
 + kubectl -n cattle-system get deploy rancher
 NAME      READY   UP-TO-DATE   AVAILABLE   AGE
 rancher   3/3     3            3           72s
