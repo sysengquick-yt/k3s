@@ -14,8 +14,8 @@ k3sup_iface: eth0
 
 # range of IPs kube-vip cloud controller will assign
 k3sup_ip_range:
-  start: 192.168.1.150
-  end: 192.168.1.199
+  start: 192.168.1.60
+  end: 192.168.1.69
 
 # rancher 2.8 cannot run on 1.28 as of 2024-03-11
 k3sup_k3s_version: v1.27.11+k3s1
@@ -44,4 +44,4 @@ k3sup_use_kube_vip: true
 k3sup_use_kube_vip_cloud_controller: true
 
 # VIP used by kube-vip for the control plane nodes
-k3sup_vip: 192.168.1.100
+k3sup_vip: 192.168.1.50

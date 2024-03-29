@@ -5,22 +5,22 @@ all:
         servers:
           hosts:
             s1.k3s.local.technoplaza.net:
-              ansible_host: 192.168.1.101
+              ansible_host: 192.168.1.51
             s2.k3s.local.technoplaza.net:
-              ansible_host: 192.168.1.102
+              ansible_host: 192.168.1.52
             s3.k3s.local.technoplaza.net:
-              ansible_host: 192.168.1.103
+              ansible_host: 192.168.1.53
         workers:
           hosts:
             w1.k3s.local.technoplaza.net:
-              ansible_host: 192.168.1.111
+              ansible_host: 192.168.1.54
             w2.k3s.local.technoplaza.net:
-              ansible_host: 192.168.1.112
+              ansible_host: 192.168.1.55
       vars:
         ansible_ssh_user: pve
     proxmox:
       hosts:
-        proxmox.technoplaza.net: {}
+        pve.local.technoplaza.net: {}
       vars:
         ansible_ssh_user: ansible
   vars:

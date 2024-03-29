@@ -3,16 +3,16 @@
 cluster_nodes:
   servers:
     - name: s1.k3s.local.technoplaza.net
-      ip: 192.168.1.101
+      ip: 192.168.1.51
     - name: s2.k3s.local.technoplaza.net
-      ip: 192.168.1.102
+      ip: 192.168.1.52
     - name: s3.k3s.local.technoplaza.net
-      ip: 192.168.1.103
+      ip: 192.168.1.53
   workers:
     - name: w1.k3s.local.technoplaza.net
-      ip: 192.168.1.111
+      ip: 192.168.1.54
     - name: w2.k3s.local.technoplaza.net
-      ip: 192.168.1.112
+      ip: 192.168.1.55
 
 # ssh user on k3s nodes with passwordless sudo
 node_ssh_user: pve
@@ -27,7 +27,7 @@ proxmox_network:
   gateway: 192.168.1.1
 
 # proxmox server hostname/IP
-proxmox_server: proxmox.technoplaza.net
+proxmox_server: pve.local.technoplaza.net
 
 # ssh user with sudo on proxmox
 proxmox_ssh_user: ansible

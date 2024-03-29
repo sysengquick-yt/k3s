@@ -8,23 +8,23 @@ proxmox_api:
 proxmox_image_delete: false
 proxmox_image_dest: "/tmp/{{ proxmox_image.name }}"
 
-proxmox_node: proxmox
+proxmox_node: pve
 
 proxmox_template:
-  block_storage: true
+  block_storage: false
   bridge: vmbr0
   ciuser: "{{ node_ssh_user }}"
   cipassword: "{{ vault.proxmox_template.cipassword }}"
   cores: 4
   disk_format: qcow2
-  image: bookworm
+  image: jammy_minimal
   memory: 4096
   name: ansible-k3s-cloud-template
   size: 10G
   ssd: true
   sshkeys: |
     ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDaZmy03rApaPZNuN1I8sfmVM/vLv+WD8c2smYyBLJJe sysengquick@wsl2
-  storage: zfs
+  storage: local
   vmid: 2500
 
 proxmox_timeouts:
