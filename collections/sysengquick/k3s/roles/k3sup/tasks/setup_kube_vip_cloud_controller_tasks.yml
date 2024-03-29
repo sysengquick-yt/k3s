@@ -1,7 +1,7 @@
 ---
 - name: Apply kube-vip cloud controller manifest
   ansible.builtin.command:
-    cmd: kubectl apply -f "{{ k3sup_kube_vip_manifests.cloud_controller }}"
+    cmd: "{{ global_cmd.kubectl }} apply -f {{ k3sup_kube_vip_manifests.cloud_controller }}"
   changed_when: true
   register: result
 
@@ -16,13 +16,13 @@
   ansible.builtin.shell:
     cmd: >-
       set -o pipefail &&
-      kubectl create configmap
+      {{ global_cmd.kubectl }} create configmap
       -n kube-system
       kubevip
       -o yaml
       --dry-run=client
       --from-literal range-global={{ k3sup_ip_range.start }}-{{ k3sup_ip_range.end }}
-      | kubectl apply -f -
+      | {{ global_cmd.kubectl }} apply -f -
     executable: /bin/bash
   changed_when: true
   register: result

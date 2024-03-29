@@ -2,7 +2,7 @@
 - name: Add worker to k3s cluster
   ansible.builtin.command:
     cmd: >-
-      /usr/local/bin/k3sup join
+      {{ global_cmd.k3sup }} join
       {{ k3sup_connect_arg }}
       --k3s-version '{{ k3sup_k3s_version }}'
       {{ k3sup_server_connect_arg }}

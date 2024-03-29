@@ -1,7 +1,7 @@
 ---
 - name: Apply kube-vip RBAC manifest
   ansible.builtin.command:
-    cmd: kubectl apply -f "{{ k3sup_kube_vip_manifests.rbac }}"
+    cmd: "{{ global_cmd.kubectl }} apply -f {{ k3sup_kube_vip_manifests.rbac }}"
   changed_when: true
   register: result
 
@@ -14,7 +14,7 @@
 
 - name: Fetch kube-vip container image
   ansible.builtin.command:
-    cmd: ctr image pull "{{ k3sup_kube_vip_image }}"
+    cmd: "{{ global_cmd.ctr }} image pull {{ k3sup_kube_vip_image }}"
   changed_when: true
   register: result
 
@@ -29,7 +29,7 @@
   ansible.builtin.shell:
     cmd: >-
       set -o pipefail &&
-      ctr run --rm --net-host {{ k3sup_kube_vip_image }} vip /kube-vip
+      {{ global_cmd.ctr }} run --rm --net-host {{ k3sup_kube_vip_image }} vip /kube-vip
       manifest daemonset
       --address {{ k3sup_vip }}
       --arp

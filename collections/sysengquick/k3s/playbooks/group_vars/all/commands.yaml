@@ -1,0 +1,6 @@
+---
+global_cmd:
+  ctr: /usr/local/bin/ctr
+  k3sup: /usr/local/bin/k3sup
+  kubectl: /usr/local/bin/kubectl
+  helm: /usr/sbin/helm

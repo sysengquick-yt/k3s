@@ -2,7 +2,7 @@
 - name: Add server to k3s cluster
   ansible.builtin.command:
     cmd: >-
-      /usr/local/bin/k3sup join
+      {{ global_cmd.k3sup }} join
       {{ k3sup_connect_arg }}
       --k3s-extra-args '{{ k3sup_extra_args_str }}'
       --k3s-version '{{ k3sup_k3s_version }}'

@@ -2,7 +2,7 @@
 - name: Deploy cluster
   ansible.builtin.command:
     cmd: >-
-      /usr/local/bin/k3sup install --cluster
+      {{ global_cmd.k3sup }} install --cluster
       --context '{{ k3sup_context }}'
       {{ k3sup_connect_arg }}
       --k3s-extra-args '{{ k3sup_extra_args_str }}'
