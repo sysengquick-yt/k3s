@@ -1,9 +1,9 @@
 ---
-name: Build/Push Container Image
+name: Build Container Image
 
 on:
   push:
-    tags: ['*']
+    tags: ["*"]
   workflow_dispatch:
 
 env:
@@ -43,5 +43,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
+          file: .devcontainer/Dockerfile
           labels: ${{ steps.metadata.outputs.labels }}
           tags: ${{ steps.metadata.outputs.tags }}

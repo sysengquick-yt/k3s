@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 1.0.2 - 2024-04-28
+
+- add README
+- cleanup post create command
+- add alma linux 8 cloud image
+- template the command paths
+- update defaults
+- update devcontainer config
+- fix typo in turnup script
+
 ## 1.0.1 - 2024-03-22
 
 - update ansible-lint

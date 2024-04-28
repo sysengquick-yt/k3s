@@ -1,7 +1,7 @@
 ---
 services:
   k3s:
-    image: ghcr.io/sysengquick/k3s:1.0.1
+    image: ghcr.io/sysengquick-yt/k3s:1.0.2
     command: sleep infinity
     volumes:
       - kube:/home/vscode/.kube
